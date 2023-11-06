@@ -1,4 +1,8 @@
+import typing
 from catalog import SupermarketCatalog
+
+if typing.TYPE_CHECKING:
+    from model_objects import Product
 
 
 class FakeCatalog(SupermarketCatalog):
@@ -13,3 +17,5 @@ class FakeCatalog(SupermarketCatalog):
     def unit_price(self, product):
         return self.prices[product.name]
 
+    def get_product(self, name: str) -> "Product":
+        return self.products[name]
