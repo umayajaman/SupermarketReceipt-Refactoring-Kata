@@ -1,6 +1,15 @@
+import typing
+
+
+if typing.TYPE_CHECKING:
+    from model_objects import Discount, Product, ProductQuantity
+
 
 class ReceiptItem:
-    def __init__(self, product, quantity, price, total_price):
+    def __init__(self, product: "Product",
+                 quantity: "ProductQuantity",
+                 price: float,
+                 total_price: float):
         self.product = product
         self.quantity = quantity
         self.price = price
@@ -12,7 +21,7 @@ class Receipt:
         self._items = []
         self._discounts = []
 
-    def total_price(self):
+    def total_price(self) -> float:
         total = 0
         for item in self.items:
             total += item.total_price
@@ -20,10 +29,14 @@ class Receipt:
             total += discount.discount_amount
         return total
 
-    def add_product(self, product, quantity, price, total_price):
+    def add_product(
+            self, product: "Product",
+            quantity: "ProductQuantity",
+            price: float,
+            total_price: float):
         self._items.append(ReceiptItem(product, quantity, price, total_price))
 
-    def add_discount(self, discount):
+    def add_discount(self, discount: "Discount"):
         self._discounts.append(discount)
 
     @property
